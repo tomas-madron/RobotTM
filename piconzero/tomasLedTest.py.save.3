@@ -1,0 +1,43 @@
+import piconzero as pz, time
+pz.init()
+pz.setOutputConfig(0,1) #PWM 0 channel
+pz.setOutputConfig(1,1) #PWM 1 channel
+pz.setOutputConfig(2,1) #PWM 2 channel
+pz.setOutputConfig(3,1) #PWM 3 channel
+
+
+
+
+#while True:
+pz.setOutput(0, 0)
+
+
+pz.setOutput(0, 100)
+time.sleep(2)
+pz.setOutput(4, 0)
+pz.setOutput(0, 100)
+time.sleep(2)
+pz.setOutput(4, 0)
+pz.setOutput(0, 0)
+
+
+print 'Toci'
+ 
+
+
+ 
+ 
+ 
+
+# for y in xrange(95, 100,1):
+ #    print y
+  #   pz.setOutput(4, y)     
+   #  time.sleep(1)
+
+ #for y in xrange(100, 95,-1):
+  #   print y
+   #  pz.setOutput(4, y)     
+    # time.sleep(1)
+
+ 
+ 

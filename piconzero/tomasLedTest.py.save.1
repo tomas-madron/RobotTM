@@ -1,0 +1,16 @@
+import piconzero as pz, time
+pz.init()
+pz.setOutputConfig(0, 0, True)
+
+
+while True:
+ for y in xrange(0, 100,2):
+     print y
+     pz.setOutput(4, y)
+    time.sleep(0.03)
+
+ for y in xrange(100, 0,-2):
+     print y
+     pz.setOutput(4, y)
+     time.sleep(0.03)
+

@@ -1,0 +1,12 @@
+import piconzero as pz, time
+pz.init()
+pz.setOutputConfig(0, 1)
+while True:
+ pz.setOutput(0, 5) # 5% - very dim
+ time.sleep(1)
+ pz.setOutput(0, 30) # 30% - medium
+ time.sleep(1)
+ pz.setOutput(0, 70) # 70% - bright
+ time.sleep(1)
+ pz.setOutput(0, 100) # 100% - maximum
+ time.sleep(1) 
