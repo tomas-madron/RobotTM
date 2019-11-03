@@ -11,15 +11,23 @@ def displayDistance():
 def displaySpeed():
     print("Speed:",speed)
 
-#GamePad
-import evdev
-from evdev import InputDevice, categorize, ecodes
 
-#Creates object gamepad
-gamepad = InputDevice('/dev/input/event0')
+from evdev import InputDevice, categorize, ecodes, KeyEvent
 
-#affiche la liste des device connectes | prints out device info at start
-print(gamepad)
+def find_controller():
+    event0 = InputDevice('/dev/input/event0')
+    event1 = InputDevice('/dev/input/event1')
+    controller_list = ["Logitech Logitech Cordless RumblePad 2"]
+    for controller in controller_list:
+        if event0.name == controller:
+            gamepad = event0
+        elif event1.name == controller:
+            gamepad = event1
+        else:
+            print("controller not found")
+    return gamepad
+
+gamepad = find_controller()
 
 
 import piconzero as pz, time
@@ -47,13 +55,13 @@ def driveDown(speed):
     pz.setOutput(pravyMotorL, speed)
     pz.setOutput(pravyMotorR, 0)
 
-def driveRight(speed):
+def driveLeft(speed):
     pz.setOutput (levyMotorL, 0)
     pz.setOutput (levyMotorR, speed)
     pz.setOutput (pravyMotorL, 0)
     pz.setOutput (pravyMotorR, speed)
 
-def driveLeft(speed):
+def driveRight(speed):
     pz.setOutput (levyMotorL, speed)
     pz.setOutput (levyMotorR, 0)
     pz.setOutput (pravyMotorL, speed)
@@ -67,9 +75,7 @@ def driveStop():
 
 def speedUpdate(speedVal, speedStep):
     global speed
-    speed = speedVal + speedStep
-
-    
+    speed = speedVal + speedStep    
 
     if speed > 100:
         speed = 100
