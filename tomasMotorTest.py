@@ -177,10 +177,10 @@ try:
                         displayDistance()
                         print("A")
                     elif event.code == bBtn:
-                        driveRight()
+                        driveRight(60)
                         print("B")
                     elif event.code == xBtn:
-                        driveLeft(speed)
+                        driveLeft(60)
                         print("X")
                     elif event.code == yBtn:
                         driveUp(speed)
@@ -194,10 +194,10 @@ try:
                     elif event.code == backBtn:
                         print("Back")
                     elif event.code == rtBtn:                        
-                        driveRight(speed)
+                        driveRight(60)
                         print("RT")
                     elif event.code == ltBtn:
-                        driveLeft(speed)
+                        driveLeft(60)
                         print("LT")
                 elif event.value == 0:
                         driveStop()
