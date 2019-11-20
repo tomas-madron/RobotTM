@@ -1,7 +1,22 @@
 import pygame
+import socket
+
+
+
 pygame.init()
  
  
+
+broadcastIP = '172.16.1.155'           # IP address to send to, 255 in one or more positions is a broadcast / wild-card
+broadcastPort = 9038   
+
+# Setup the connection for sending on
+sender = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)       # Create the socket
+sender.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)                        # Enable broadcasting (sending to many IPs based on wild-cards)
+sender.bind(('0.0.0.0', 0))                                                         # Set the IP and port number to use locally, IP 0.0.0.0 means all connections and port 0 means assign a number for us (do not care)
+
+
+
 def main():
     
    
@@ -15,6 +30,7 @@ def main():
     joysticks = []
     clock = pygame.time.Clock()
     keepPlaying = True
+
  
     # for al the connected joysticks
     for i in range(0, pygame.joystick.get_count()):
@@ -26,6 +42,7 @@ def main():
         print ("Detected joystick \'",joysticks[-1].get_name(),"\'")
     while keepPlaying:
         clock.tick(60)
+        
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     print ("Received event 'Quit', exiting.")
@@ -42,23 +59,32 @@ def main():
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     print ("Mouse button",event.button,"down at",pygame.mouse.get_pos())
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    print ("Mouse button",event.button,"up at",pygame.mouse.get_pos())
+                    print ("Mouse button",event.button,"up at",pygame.mouse.get_pos())                    
                 elif event.type == pygame.JOYAXISMOTION:
+                    sendData = str(event.axis).encode()
                     print ("Joystick '",joysticks[event.joy].get_name(),"' axis",event.axis,"motion.")
+                    sender.sendto(sendData, (broadcastIP, broadcastPort))       
                 elif event.type == pygame.JOYBUTTONDOWN:
+                    sendData = str(event.button).encode()
                     print ("Joystick '",joysticks[event.joy].get_name(),"' button",event.button,"down.")
+                    sender.sendto(sendData, (broadcastIP, broadcastPort))       
                     # if event.button == 0:
                         # background.fill((255, 0, 0))
                     # elif event.button == 1:
                         # background.fill((0, 0, 255))
                 elif event.type == pygame.JOYBUTTONUP:
+                    sendData = str(event.button).encode()
                     print ("Joystick \'",joysticks[event.joy].get_name(),"\' button",event.button,"up.")
+                    sender.sendto(sendData, (broadcastIP, broadcastPort))       
                     # if event.button == 0:
                         # background.fill((255, 255, 255))
                     # elif event.button == 1:
                         # background.fill((255, 255, 255))
                 elif event.type == pygame.JOYHATMOTION:
+                    print (event.value)
+                    sendData = str(event.value).encode()
                     print ("Joystick \'",joysticks[event.joy].get_name(),"\' hat",event.value," moved.")
+                    sender.sendto(sendData, (broadcastIP, broadcastPort))       
                      
         # screen.blit(background, (0, 0))
         # pygame.display.flip()
