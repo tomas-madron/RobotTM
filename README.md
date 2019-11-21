@@ -16,10 +16,10 @@ Raspberry Pi Tutorial 29 - Pratical Socket Communication
 
 
 Basic commands: 
--------------------------------------------------------------------------------------------------
+
 sudo crontab -e
 @reboot cd /home/pi/.config && ./numlock.sh
 #@reboot sh /home/pi/RobotTM/launcher.sh >/home/pi/logs/cronlog 2>&1
-#@reboot sleep 40 && python /home/pi/RobotTM/tomasMotorTest.py >/home/pi/logs/c$
+@reboot sleep 40 && python /home/pi/RobotTM/tomasMotorTest.py >/home/pi/logs/c$
 @reboot sleep 40 && /home/pi/neco/mjpg-streamer-master/mjpg-streamer-experiment$
-------------------------------------------------------------------------------------------------
+
